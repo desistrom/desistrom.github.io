@@ -5,72 +5,64 @@ Date : 7 April 2021
 */
 document.addEventListener('contextmenu', event => event.preventDefault());
 
-var domain = "https://desistrom.github.io/";
+var domain = "./";
 var c = document.querySelector('p[class="mt-2"]').textContent;
-// if(c != "\xa9\x20\x46\x69\x6b\x72\x69\x20\x4d\x61\x75\x6c\x61\x6e\x61\x20\x28\x4b\x6f\x46\x69\x44\x65\x76\x29\x20\x7c\x20\x4d\x61\x64\x65\x20\u2764\ufe0f"){
-//     $("#content").html('\x48\x61\x72\x67\x61\x69\x20\x43\x6f\x70\x79\x72\x69\x67\x68\x74\x20\ud83d\ude1d');
-// }else{
+
+function initTyped() {
+    if (typeof Typed === 'undefined' || !document.getElementById('typed')) {
+        return;
+    }
+
+    new Typed('#typed', {
+        stringsElement: '#typed-strings',
+        typeSpeed: 24,
+        backSpeed: 12,
+        backDelay: 1800,
+        startDelay: 200,
+        loop: true
+    });
+}
+
+function loadPage(page) {
+    $.ajax({
+        type: 'GET',
+        url: domain + page,
+        cache: false,
+        processData: false,
+        contentType: false,
+        success: function(result) {
+            $("#content").html(result);
+            initTyped();
+        }
+    });
+}
+
 $(document).ready(function() {
-    $.ajax({
-        type: 'GET',
-        url: domain + "home.html",
-        cache: false,
-        processData: false,
-        contentType: false,
-        success: function(result) {
-            $("#content").html(result);
-        }
-    });
+    loadPage('home.html');
 });
 
-$('a.home').bind('click', function(event) {
-    $.ajax({
-        type: 'GET',
-        url: domain + "home.html",
-        cache: false,
-        processData: false,
-        contentType: false,
-        success: function(result) {
-            $("#content").html(result);
-        }
-    });
-});
-$('a.about').bind('click', function(event) {
-    $.ajax({
-        type: 'GET',
-        url: domain + "about.html",
-        cache: false,
-        processData: false,
-        contentType: false,
-        success: function(result) {
-            $("#content").html(result);
-        }
-    });
+$(document).on('click', 'a.home', function(event) {
+    event.preventDefault();
+    loadPage('home.html');
 });
 
-$('a.skill').bind('click', function(event) {
-    $.ajax({
-        type: 'GET',
-        url: domain + "skill.html",
-        cache: false,
-        processData: false,
-        contentType: false,
-        success: function(result) {
-            $("#content").html(result);
-        }
-    });
+$(document).on('click', 'a.about', function(event) {
+    event.preventDefault();
+    loadPage('about.html');
 });
 
-$('a.contact').bind('click', function(event) {
-    $.ajax({
-        type: 'GET',
-        url: domain + "contact.html",
-        cache: false,
-        processData: false,
-        contentType: false,
-        success: function(result) {
-            $("#content").html(result);
-        }
-    });
+$(document).on('click', 'a.skill', function(event) {
+    event.preventDefault();
+    loadPage('skill.html');
+});
+
+$(document).on('click', 'a.project', function(event) {
+    event.preventDefault();
+    loadPage('project.html');
+});
+
+$(document).on('click', 'a.contact', function(event) {
+    event.preventDefault();
+    loadPage('contact.html');
 });
 // }
